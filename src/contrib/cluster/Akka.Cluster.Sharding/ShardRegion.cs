@@ -611,9 +611,11 @@ namespace Akka.Cluster.Sharding
                     DeliverStartEntity(message, Sender);
                     return true;
                 case var _ when _extractEntityId(message).HasValue:
+                    var eid = _extractEntityId(message);
                     DeliverMessage(message, Sender);
                     return true;
                 default:
+                    var eid2 = _extractEntityId(message);
                     _log.Warning("{0}: Message does not have an extractor defined in shard so it was ignored: {1}", _typeName, message);
                     return false;
             }
